@@ -1,6 +1,9 @@
 ---
 # try also 'default' to start simple
+# theme: apple-basic
 theme: seriph
+
+# layout: intro
 # random image from a curated Unsplash collection by Anthony
 # like them? see https://unsplash.com/collections/94734566/slidev
 background: https://source.unsplash.com/collection/94734566/1920x1080
@@ -8,376 +11,521 @@ background: https://source.unsplash.com/collection/94734566/1920x1080
 class: 'text-center'
 # https://sli.dev/custom/highlighters.html
 highlighter: shiki
-# show line numbers in code blocks
-lineNumbers: false
 # some information about the slides, markdown enabled
 info: |
   ## Slidev Starter Template
   Presentation slides for developers.
 
   Learn more at [Sli.dev](https://sli.dev)
-# persist drawings in exports and build
-drawings:
-  persist: false
 ---
 
-# Welcome to Slidev
+# Elixir Way by revisiting a project
 
-Presentation slides for developers
 
-<div class="pt-12">
-  <span @click="$slidev.nav.next" class="px-2 py-1 rounded cursor-pointer" hover="bg-white bg-opacity-10">
-    Press Space for next page <carbon:arrow-right class="inline"/>
-  </span>
-</div>
+@gzzengwei
 
-<div class="abs-br m-6 flex gap-2">
-  <button @click="$slidev.nav.openInEditor()" title="Open in Editor" class="text-xl icon-btn opacity-50 !border-none !hover:text-white">
-    <carbon:edit />
-  </button>
-  <a href="https://github.com/slidevjs/slidev" target="_blank" alt="GitHub"
-    class="text-xl icon-btn opacity-50 !border-none !hover:text-white">
-    <carbon-logo-github />
-  </a>
-</div>
+---
+
+# Starting
+
+- 🧑‍💻 **About Me**
+  * long time rubist
+  * like engineering/ops stuffs
+  * getting into FP/elixir
+
+<v-click>
+
+- 🤹 **About this talk**
+  * an ealry elixir project
+  * revisiting / improvement
+
+</v-click>
+
+<v-click>
+
+- 🎥 **Disclaimer**
+  * learning in progress
+  * spark/poc, not all verified in production
+
+</v-click>
 
 <!--
-The last comment block of each slide will be treated as slide notes. It will be visible and editable in Presenter Mode along with the slide. [Read more in the docs](https://sli.dev/guide/syntax.html#notes)
+- Did my first few elixir projects as kind of experiments
+- Do full time elixir for around a year
+- Reviewing the projects I done, Wondering what approach I would do if I do it again
+- The project is relativly simple yet have real world requuirements
+- During the spark, I think the journey might be a good topic for beginner to get to know elixir
+
+
+- entry level, in production the config of the params will be more complex and could take long time to config
 -->
 
 ---
 
-# What is Slidev?
+# Project backgrounds
 
-Slidev is a slides maker and presenter designed for developers, consist of the following features
+- 🚜 An importer for CSV files from external source
+- 🛎 Data source is updated daily (cronjob)
+- 🔗 There are up to 50+ csv types (different job types)
+- 📈 Data is to dump to db directly for BI purpose (downstream target)
+- 🎏 CSV schema changes occasionally (exceptions could happen)
+- 📺 A simple dashboard is required to integrate in main app (web interface)
 
-- 📝 **Text-based** - focus on the content with Markdown, and then style them later
-- 🎨 **Themable** - theme can be shared and used with npm packages
-- 🧑‍💻 **Developer Friendly** - code highlighting, live coding with autocompletion
-- 🤹 **Interactive** - embedding Vue components to enhance your expressions
-- 🎥 **Recording** - built-in recording and camera view
-- 📤 **Portable** - export into PDF, PNGs, or even a hostable SPA
-- 🛠 **Hackable** - anything possible on a webpage
 
-<br>
-<br>
+---
 
-Read more about [Why Slidev?](https://sli.dev/guide/why)
+# Choosing the stack
+
+<br />
+
+<p style="text-align: center;">
+  <h2> Ruby / Elixir </h2>
+</p>
 
 <!--
-You can have `style` tag in markdown to override the style for the current page.
-Learn more: https://sli.dev/guide/syntax#embedded-styles
+
+- multi csv types: job workers
+
+- A UI dashboard: web service
+
+ruby
+  - sidekiq/activeJob
+  - rails/sinatra
+  - Redis
+
 -->
 
-<style>
-h1 {
-  background-color: #2B90B6;
-  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-}
-</style>
+---
+
+# Demo
+
+- 👻 Simple job process service
+- 🎷 Dummy code to demo some of elixir basic modules
+
+<br />
+
+<v-click>
+
+#### So, we are going to start with something very simple ...
+
+</v-click>
+
+<!--
+
+Terminal:
+
+git checkout v01
+
+- explain job/job_manager/supervisor
+- run happy/bad path
+- enable Scheduler, try both paths
+
+Issues:
+- sequential takes time, waste infra resouces
+- exeption will break rest of the loop, also the caller process
+
+-->
 
 ---
 
-# Navigation
+# Task
 
-Hover on the bottom-left corner to see the navigation's controls panel, [learn more](https://sli.dev/guide/navigation.html)
+- 🎃 conveniences for spawning and awaiting tasks
+- 👺 execute one particular action throughout their lifetime
+- 🦖 little or no communication with other processes
+- 🏄🏾‍♂️ convert sequential code into concurrent code by computing a value asynchronously
+- Simple usage: `start` and `async`
 
-### Keyboard Shortcuts
+<!--
 
-|     |     |
-| --- | --- |
-| <kbd>right</kbd> / <kbd>space</kbd>| next animation or slide |
-| <kbd>left</kbd>  / <kbd>shift</kbd><kbd>space</kbd> | previous animation or slide |
-| <kbd>up</kbd> | previous slide |
-| <kbd>down</kbd> | next slide |
+Terminal:
 
-<!-- https://sli.dev/guide/animations.html#click-animations -->
-<img
-  v-click
-  class="absolute -bottom-9 -left-7 w-80 opacity-50"
-  src="https://sli.dev/assets/arrow-bottom-left.svg"
-/>
-<p v-after class="absolute bottom-23 left-45 opacity-30 transform -rotate-10">Here!</p>
+git checkout v02
 
----
-layout: image-right
-image: https://source.unsplash.com/collection/94734566/1920x1080
----
+- changes: `Task.start`
+- run happy/bad path
+- enable Scheduler, try both path
+- sometimes will need task results, also a place to store the state
 
-# Code
-
-Use code snippets and get the highlighting directly![^1]
-
-```ts {all|2|1-6|9|all}
-interface User {
-  id: number
-  firstName: string
-  lastName: string
-  role: string
-}
-
-function updateUser(id: number, update: User) {
-  const user = getUser(id)
-  const newUser = {...user, ...update}  
-  saveUser(id, newUser)
-}
-```
-
-<arrow v-click="3" x1="400" y1="420" x2="230" y2="330" color="#564" width="3" arrowSize="1" />
-
-[^1]: [Learn More](https://sli.dev/guide/syntax.html#line-highlighting)
-
-<style>
-.footnotes-sep {
-  @apply mt-20 opacity-10;
-}
-.footnotes {
-  @apply text-sm opacity-75;
-}
-.footnote-backref {
-  display: none;
-}
-</style>
+-->
 
 ---
 
-# Components
+# GenServer
 
-<div grid="~ cols-2 gap-4">
+- ⛹🏿‍♀️ A behaviour module for implementing the server of a client-server relation.
+- 🦚 A process to keep state, execute code asynchronously and so on
+- 💫 Standard set of interface functions, includes tracing and error reporting
+
+<!--
+
+My understanding
+- Implemetation of Actor Model
+- elixir is FP languange, and GenServer is goto place store and due with state
+- Communicate with other process by exchange of sending messages
+
+Terminal:
+
+git checkout v03
+
+- changes:
+  - Application -> enable JobManager in supervisor children
+  - JobManager -> GenServer
+  - Task.start -> Task.async
+  - Save task results to state
+  - Job -> has a return value
+
+- run happy path, then check state
+
+:sys.get_state(JobDemo.JobManager)
+
+- run bad path, show: jobs not finished/JobManger restarted
+- uncomment job.ex s rescue block to show error handling
+
+-->
+
+---
+
+# Issues
+
+- Often we are running many processes, like many Job types in the example
+- When single process dies, and it should not effects others, and its parent process
+- process should be isolated when crashed, and restart
+
+---
+
+# Supervisor
+
+- 🔍 Supervises other processes
+- 🌲 supervision tree: hierarchical process structure
+- 🔥 provide fault-tolerance/encapsulate how app start/shutdown
+
+---
+
+# Structure Diagram
+
+<div grid="~ cols-2 gap-4" m="-t-2">
 <div>
 
-You can use Vue components directly inside your slides.
+**Current supervision tree**
 
-We have provided a few built-in components like `<Tweet/>` and `<Youtube/>` that you can use directly. And adding your custom components is also super easy.
-
-```html
-<Counter :count="10" />
-```
-
-<!-- ./components/Counter.vue -->
-<Counter :count="10" m="t-4" />
-
-Check out [the guides](https://sli.dev/builtin/components.html) for more.
-
-</div>
-<div>
-
-```html
-<Tweet id="1390115482657726468" />
-```
-
-<Tweet id="1390115482657726468" scale="0.65" />
-
-</div>
-</div>
-
-
----
-class: px-20
----
-
-# Themes
-
-Slidev comes with powerful theming support. Themes can provide styles, layouts, components, or even configurations for tools. Switching between themes by just **one edit** in your frontmatter:
-
-<div grid="~ cols-2 gap-2" m="-t-2">
-
-```yaml
----
-theme: default
----
-```
-
-```yaml
----
-theme: seriph
----
-```
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-default/01.png?raw=true">
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-seriph/01.png?raw=true">
-
-</div>
-
-Read more about [How to use a theme](https://sli.dev/themes/use.html) and
-check out the [Awesome Themes Gallery](https://sli.dev/themes/gallery.html).
-
----
-preload: false
----
-
-# Animations
-
-Animations are powered by [@vueuse/motion](https://motion.vueuse.org/).
-
-```html
-<div
-  v-motion
-  :initial="{ x: -80 }"
-  :enter="{ x: 0 }">
-  Slidev
-</div>
-```
-
-<div class="w-60 relative mt-6">
-  <div class="relative w-40 h-40">
-    <img
-      v-motion
-      :initial="{ x: 800, y: -100, scale: 1.5, rotate: -50 }"
-      :enter="final"
-      class="absolute top-0 left-0 right-0 bottom-0"
-      src="https://sli.dev/logo-square.png"
-    />
-    <img
-      v-motion
-      :initial="{ y: 500, x: -100, scale: 2 }"
-      :enter="final"
-      class="absolute top-0 left-0 right-0 bottom-0"
-      src="https://sli.dev/logo-circle.png"
-    />
-    <img
-      v-motion
-      :initial="{ x: 600, y: 400, scale: 2, rotate: 100 }"
-      :enter="final"
-      class="absolute top-0 left-0 right-0 bottom-0"
-      src="https://sli.dev/logo-triangle.png"
-    />
-  </div>
-
-  <div
-    class="text-5xl absolute top-14 left-40 text-[#2B90B6] -z-1"
-    v-motion
-    :initial="{ x: -80, opacity: 0}"
-    :enter="{ x: 0, opacity: 1, transition: { delay: 2000, duration: 1000 } }">
-    Slidev
-  </div>
-</div>
-
-<!-- vue script setup scripts can be directly used in markdown, and will only affects current page -->
-<script setup lang="ts">
-const final = {
-  x: 0,
-  y: 0,
-  rotate: 0,
-  scale: 1,
-  transition: {
-    type: 'spring',
-    damping: 10,
-    stiffness: 20,
-    mass: 2
-  }
-}
-</script>
-
-<div
-  v-motion
-  :initial="{ x:35, y: 40, opacity: 0}"
-  :enter="{ y: 0, opacity: 1, transition: { delay: 3500 } }">
-
-[Learn More](https://sli.dev/guide/animations.html#motion)
-
-</div>
-
----
-
-# LaTeX
-
-LaTeX is supported out-of-box powered by [KaTeX](https://katex.org/).
-
-<br>
-
-Inline $\sqrt{3x-1}+(1+x)^2$
-
-Block
-$$
-\begin{array}{c}
-
-\nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} &
-= \frac{4\pi}{c}\vec{\mathbf{j}}    \nabla \cdot \vec{\mathbf{E}} & = 4 \pi \rho \\
-
-\nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} & = \vec{\mathbf{0}} \\
-
-\nabla \cdot \vec{\mathbf{B}} & = 0
-
-\end{array}
-$$
-
-<br>
-
-[Learn more](https://sli.dev/guide/syntax#latex)
-
----
-
-# Diagrams
-
-You can create diagrams / graphs from textual descriptions, directly in your Markdown.
-
-<div class="grid grid-cols-3 gap-10 pt-4 -mb-6">
-
-```mermaid {scale: 0.5}
-sequenceDiagram
-    Alice->John: Hello John, how are you?
-    Note over Alice,John: A typical interaction
-```
-
-```mermaid {theme: 'neutral', scale: 0.8}
+```mermaid {theme: 'forest', scale: 0.7}
 graph TD
-B[Text] --> C{Decision}
-C -->|One| D[Result 1]
-C -->|Two| E[Result 2]
-```
-
-```plantuml {scale: 0.7}
-@startuml
-
-package "Some Group" {
-  HTTP - [First Component]
-  [Another Component]
-}
-
-node "Other Groups" {
-  FTP - [Second Component]
-  [First Component] --> FTP
-}
-
-cloud {
-  [Example 1]
-}
-
-
-database "MySql" {
-  folder "This is my folder" {
-    [Folder 3]
-  }
-  frame "Foo" {
-    [Frame 4]
-  }
-}
-
-
-[Another Component] --> [Example 1]
-[Example 1] --> [Folder 3]
-[Folder 3] --> [Frame 4]
-
-@enduml
+A([Application]) --> B(Scheduler)
+A([Application]) --> C(JobManager)
+C -->|run task| D[JobA]
+C -->|run task| E[JobB]
+C -->|run task| F[JobC]
 ```
 
 </div>
 
-[Learn More](https://sli.dev/guide/syntax.html#diagrams)
+<v-click>
 
+<div>
+
+**With Supervisor**
+
+```mermaid {theme: 'forest', scale: 0.7}
+graph TD
+A([Application]) --> B(Scheduler)
+A([Application]) --> C(JobManager)
+
+C --> D{{Supervisor}}
+C --> E{{Supervisor}}
+C --> F{{Supervisor}}
+D --> G(JobA)
+E --> H(JobB)
+F --> I(JobC)
+```
+</div>
+
+</v-click>
+
+</div>
+
+<!--
+Terminal:
+
+git checkout v04
+
+- changes:
+  - Application -> DynamicSupervisor
+  - creates JobSuperviosr, restart polices
+  - Job -> GenServer
+  - JobManager init -> start JobSuperviosr via DynamicSupervisor
+
+:sys.get_state(JobDemo.JobManager)
+
+- run happy/bad path, to show JobManager not effected
+:sys.get_state(JobDemo.JobA) # show last_done
+:sys.get_state(JobDemo.JobB) # show nil last_done
+-->
+
+
+---
+
+# New Issue
+
+- 💥 Everything works fine, until ..
+- 🦀 A big tenant has large csv file(s) in both size and qunatity
+- 🥀 Hit by DB error
+
+```
+(DBConnection.ConnectionError socket closed (the connection was closed by the pool,
+possibly due to a timeout or because the pool has been terminated))
+```
+- 🍿 Data reach peak once cronjob triggers, and flood the DB with all the concurrent tasks
+- 🚦 DB simple cannot handle the load
+
+---
+
+# Revisit the workload
+
+- 🍄 sequential: taking too long and waste of infra resouces
+- 🚗 concurrent without control: too much pressures on downstream service in short time
+
+<v-click>
+
+- 🎸 The job actually split into 2 parts
+  - **Upstream**: Data fetching(read rows from csv file(s))
+  - **Downstream**: Import the rows to db
+
+</v-click>
+
+<v-click>
+
+- 🛫 Split the workflow to (multi) stages that we have control of
+
+</v-click>
+
+---
+
+# GenStage
+
+- 🛸 data-exchange steps that send and/or receive data from other stages
+- 🥽 producer: stage sends data; consumer: it receives data;
+- 🦷 some stages can be both producer and consumer
+- 🌸 back-pressure mechanism: consumer is sending demand upstream, the producer will emit items
+
+
+<v-click>
+
+**Data flow:**
+
+[Producer] -- data --> [ProducerConsumer] -- data --> [Consumer]
+
+</v-click>
+
+<v-click>
+
+**Demand flow:**
+
+[Producer] <-- ask for data -- [ProducerConsumer] <-- ask for data -- [Consumer]
+
+</v-click>
+
+---
+
+# Let's do some spark
+
+- 🐠 **producer** : sending rows from csv file(s)
+- 🐢 **consumer** : Importing data to db
+- 🐯 issue: data source is passive(trigger by cronjob)
+- 🍀 we need something in between reading data in files and emitting data
+
+
+---
+
+# First version: Pubsub
+
+- 🐙 Why Pubsub
+- 🐣 A buffer between Job/Producer
+
+```mermaid {theme: 'forest', scale: 0.5}
+sequenceDiagram
+  participant ExternalSource
+  participant JobManager
+  participant Supervisor
+  participant Job
+  participant PubSub
+  participant Producer
+  participant Consumer
+  participant Database
+
+  Note over Producer,Consumer: GenStage
+
+  JobManager ->> Supervisor: spin up
+  Supervisor ->> Job: supervise
+  Consumer -->> Producer: Subscribe
+  Producer -->> PubSub: Subscribe
+  ExternalSource ->> Job: read rows from source
+  Job ->> PubSub: broadcast data in batch
+  PubSub ->> Producer: push data
+  Producer ->> Consumer: emit data
+  Consumer ->> Database: import
+
+```
+
+<!--
+
+Why? I havn't read the docs throuthoroughly enough
+
+Terminal:
+
+git checkout v05
+
+- changes:
+  - Application -> PubSub/Producer/Consumer
+  - Job ->
+    - run: use stream
+    - pubsub: broadcast
+  - JobType: simulate range/data
+  - Producer: subscribe to PubSub
+  - Consumer: subscribe to Producer/ use sleep simulate run
+
+- run happy path to show consumer log
+- run bad path to show JobA/C works
+- update job range to 1000s to show discards events
+- update application consumer number and rerun
+
+-->
+
+---
+
+# Buffering demand
+
+- 💦 Handle cases that:
+  - events arrive and there are no consumers
+  - consumers send demand and there are not enough events
+- 🌴 link: https://hexdocs.pm/gen_stage/GenStage.html#module-buffering-demand
+
+## BroadcastDispatcher
+
+- 🐚 Accumulates demand from all consumers before broadcasting events to all of them.
+- 🦢 Guarantees that events are dispatched to all consumers within demand range
+- Advanced features like `:selector` consumer only subscribe to certain events
+
+
+<!--
+
+Terminal:
+
+git checkout v06
+
+- changes:
+  - remove PubSub
+  - Producer: GenStage.BroadcastDispatcher
+  - Consumer: subscribe to Producer/ use sleep simulate run
+
+
+- run happy path to show consumer log
+- run bad path to show JobA/C works
+- update job range to 1000s to show discards events
+- update application consumer number and rerun
+- update producer
+
+  def init(state) do
+    {:producer, state, dispatcher: GenStage.BroadcastDispatcher, buffer_size: :infinity}
+  end
+
+-->
+
+---
+
+# Buffering demand (cont.)
+
+## BroadcastDispatcher with queue
+
+- 🍋 Use erlang `:queue` module (FIFO)
+- 🥗 Control over the events and demand by tracking this data locally
+
+<v-click>
+
+```mermaid {theme: 'forest', scale: 0.5}
+sequenceDiagram
+  participant ExternalSource
+  participant JobManager
+  participant Supervisor
+  participant Job
+  participant Producer
+  participant Consumer
+  participant Database
+
+  Note over Producer,Consumer: GenStage
+
+  JobManager ->> Supervisor: spin up
+  Supervisor ->> Job: supervise
+  Consumer -->> Producer: Subscribe
+  ExternalSource ->> Job: read rows from source
+  Job ->> Producer: notify events
+  Producer ->> Producer: queue up events
+  Consumer ->>+ Producer: demand
+  Producer -->>- Consumer: emit events
+  Consumer ->> Database: import
+
+```
+
+</v-click>
+
+<!--
+
+Terminal:
+
+git checkout v07
+
+- changes:
+  - Producer:
+    - init: new erlang :queue instance
+    - handle_call(:notify):
+      - add incoming event to queue
+      - dispatch pending events in state
+    - handle_demand: dispatch incoming and pending events
+
+
+- run happy path to show consumer log
+- run bad path to show JobA/C works
+- update job range to 1000s to show discards events
+- update application consumer number and rerun
+- update producer
+
+  def init(state) do
+    {:producer, state, dispatcher: GenStage.BroadcastDispatcher, buffer_size: :infinity}
+  end
+
+-->
+
+---
+
+# Summary
+
+- 🥯 More understanding Elixir tools
+- 🌈 Tools are powerful but they might require learning curve
+- 💐 Confidence in its performance
+
+<v-click>
+
+- 🛠 More to explorer
+  - Broadway: Concurrent and multi-stage data ingestion and data processing
+  - Commanded: CQRS/EventSourcing
+
+</v-click>
+
+<br />
+
+<v-click>
+
+### Reference
+
+Book by *Svilen Gospodinov*, **Concurrent Data Processing in Elixir**
+
+</v-click>
 
 ---
 layout: center
 class: text-center
 ---
 
-# Learn More
+# Thank You
 
-[Documentations](https://sli.dev) · [GitHub](https://github.com/slidevjs/slidev) · [Showcases](https://sli.dev/showcases.html)
+### Questions ?
